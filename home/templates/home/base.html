@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Animal Encyclopedia: Learn about animals with detailed descriptions, fun facts, and interactive features.">
+    <meta name="author" content="Animal Encyclopedia Team">
+    <title>Animal Encyclopedia - {% block title %}Home{% endblock %}</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-paw me-2" aria-hidden="true"></i>
+                <span>Animal Encyclopedia</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}" onclick="closeNavbar()">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/kids/' %}active{% endif %}" href="{% url 'kids_section' %}" onclick="closeNavbar()">Kids Corner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/scholars/' %}active{% endif %}" href="{% url 'scholars_section' %}" onclick="closeNavbar()">Scholars' Hub</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <button id="darkModeToggle" class="btn btn-outline-primary me-2">
+                        <i id="darkModeIcon" class="fas fa-moon"></i>
+                    </button>
+
+                    {% if user.is_authenticated %}
+                    <span class="welcome-text me-3">
+                        Welcome, {{ user.get_username|default:"Guest" }}
+                    </span>
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary">Logout</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; {% now "Y" %} Animal Encyclopedia. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Auto-close navbar on mobile -->
+    <script>
+        function closeNavbar() {
+            let navbar = document.getElementById("navbarNav");
+            let bsCollapse = new bootstrap.Collapse(navbar, { toggle: false });
+            if (navbar.classList.contains("show")) {
+                bsCollapse.hide();
+            }
+        }
+
+        // Dark Mode Toggle
+        document.addEventListener("DOMContentLoaded", function () {
+            let darkModeToggle = document.getElementById('darkModeToggle');
+            let darkModeIcon = document.getElementById('darkModeIcon');
+            let body = document.body;
+
+            // Load saved theme preference
+            let mode = localStorage.getItem('mode');
+            if (mode === 'dark') {
+                body.classList.add('dark-mode');
+                darkModeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // Toggle dark mode on button click
+            darkModeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+                let isDarkMode = body.classList.contains('dark-mode');
+
+                // Update icon and save preference
+                darkModeIcon.classList.replace(isDarkMode ? 'fa-moon' : 'fa-sun', isDarkMode ? 'fa-sun' : 'fa-moon');
+                localStorage.setItem('mode', isDarkMode ? 'dark' : 'light');
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

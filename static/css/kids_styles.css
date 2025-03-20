@@ -1,0 +1,55 @@
+/* Animal Cards */
+.animal-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: white;
+    max-width: 300px;
+}
+
+.animal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.animal-card h3 {
+    color: #333;
+    margin: 10px 0;
+}
+
+.animal-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.fun-fact {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Grid Layout */
+.animal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .animal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .animal-card {
+        padding: 15px;
+    }
+}

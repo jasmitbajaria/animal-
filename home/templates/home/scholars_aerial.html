@@ -1,0 +1,276 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Welcome to the Scholars' Hub - Aerial Animals!</h1>
+        <p>Soar through the skies and uncover the secrets of the world's greatest fliers!</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="welcome-section">
+            <h2>Discover the Science of Flight!</h2>
+            <p>Learn about the anatomy, behavior, and adaptations that make aerial creatures masters of the skies!</p>
+        </div>
+
+        <!-- ✅ Fun Facts Section (Fixed Box) -->
+        <div class="fun-facts-carousel">
+            <h3>Did You Know?</h3>
+            <div class="facts-container">
+                <div class="fact-slide active"><p>The wandering albatross has the longest wingspan of any bird, reaching up to 12 feet!</p></div>
+                <div class="fact-slide"><p>Owls have specialized feathers that allow them to fly almost silently!</p></div>
+                <div class="fact-slide"><p>Peregrine falcons are the fastest animals on Earth, diving at speeds over 240 mph!</p></div>
+                <div class="fact-slide"><p>Bats use echolocation to navigate and find prey in complete darkness!</p></div>
+                <div class="fact-slide"><p>Some birds, like the Arctic tern, migrate over 40,000 miles each year!</p></div>
+            </div>
+            <div class="fact-dots"></div>
+        </div>
+
+        <!-- ✅ Aerial Animals Grid (Added Explore Button) -->
+        <h3 class="animal-section-title">Meet the Aerial Creatures!</h3>
+        <div class="categories-section">
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Bat.jpg" alt="Bat">
+                <h3>Bat</h3>
+                <a href="{% url 'animal_detail' 1 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Butterfly.jpg" alt="Butterfly">
+                <h3>Butterfly</h3>
+                <a href="{% url 'animal_detail' 2 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Crow.jpg" alt="Crow">
+                <h3>Crow</h3>
+                <a href="{% url 'animal_detail' 3 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Eagle.jpg" alt="Eagle">
+                <h3>Eagle</h3>
+                <a href="{% url 'animal_detail' 4 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Falcon.jpg" alt="Falcon">
+                <h3>Falcon</h3>
+                <a href="{% url 'animal_detail' 5 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Hummingbird.jpg" alt="Hummingbird">
+                <h3>Hummingbird</h3>
+                <a href="{% url 'animal_detail' 6 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Owl.jpg" alt="Owl">
+                <h3>Owl</h3>
+                <a href="{% url 'animal_detail' 7 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Parrot.jpg" alt="Parrot">
+                <h3>Parrot</h3>
+                <a href="{% url 'animal_detail' 8 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Peacock.jpg" alt="Peacock">
+                <h3>Peacock</h3>
+                <a href="{% url 'animal_detail' 9 %}" class="explore-btn">Explore</a>
+            </div>
+            <div class="category-card">
+                <img src="/media/animals/scholarshubm/aerial/Pigeon.jpg" alt="Pigeon">
+                <h3>Pigeon</h3>
+                <a href="{% url 'animal_detail' 10 %}" class="explore-btn">Explore</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ✅ Hero Section - Fixed */
+.hero-section {
+    position: relative;
+    height: 650px;
+    background: url('/media/animals/scholarshubm/aa.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* ✅ Adjusted Page Height for Buttons */
+.main-content {
+    padding-bottom: 50px;
+}
+
+/* ✅ Aerial Animals Grid - Fixed */
+.animal-section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.categories-section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 50px;
+}
+
+/* ✅ Category Card */
+.category-card {
+    width: 220px;
+    height: 330px; /* Increased to fit button */
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background: white;
+    padding: 10px;
+}
+
+/* ✅ Animal Image */
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.category-card h3 {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: black;
+}
+
+/* ✅ Explore Button */
+.explore-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #ff5733;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.explore-btn:hover {
+    background: #c0392b;
+}
+/* ✅ Fixed Fun Facts Section */
+.fun-facts-carousel {
+    background: url('/media/animals/didyouknow.jpg') center/cover no-repeat;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    margin: 50px 0;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    color: white; /* "Did You Know?" text color */
+}
+
+.facts-container {
+    background: rgba(255, 255, 255, 0.9);
+    position: relative;
+    min-height: 120px;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: var(--radius-md);
+}
+
+.fact-slide {
+    display: none;
+    font-size: 1.3rem;
+    color: grey; /* Fact text color */
+}
+
+.fact-slide.active {
+    display: block;
+}
+.fact-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.fact-dot {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.fact-dot.active {
+    background: #ff5733;
+}
+
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.fact-slide');
+    slides[currentSlide].classList.add("active");
+
+    function showSlide(n) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+    }
+
+    setInterval(() => {
+        showSlide(currentSlide + 1);
+    }, 5000);
+});
+let currentSlide = 0;
+const slides = document.querySelectorAll('.fact-slide');
+const dotsContainer = document.querySelector('.fact-dots');
+
+// Create dots for each slide
+slides.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.classList.add('fact-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+});
+
+// Show a specific slide
+function showSlide(n) {
+    slides.forEach(slide => slide.style.display = 'none');
+    document.querySelectorAll('.fact-dot').forEach(dot => dot.classList.remove('active'));
+    
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].style.display = 'block';
+    document.querySelectorAll('.fact-dot')[currentSlide].classList.add('active');
+}
+
+// Go to the next slide
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+// Go to a specific slide
+function goToSlide(n) {
+    showSlide(n);
+}
+
+// Automatically move to the next slide every 5 seconds
+setInterval(nextSlide, 5000);
+
+// Show the first slide initially
+showSlide(0);
+</script>
+{% endblock %}

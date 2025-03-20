@@ -1,0 +1,10 @@
+<h1>{{ category|title }} Animals</h1>
+<div class="animal-list">
+    {% for animal in animals %}
+    <div class="animal-card">
+        <img src="{{ animal.image.url }}" alt="{{ animal.name }}">
+        <h3>{{ animal.name }}</h3>
+        <p>{{ animal.description }}</p>
+    </div>
+    {% endfor %}
+</div>

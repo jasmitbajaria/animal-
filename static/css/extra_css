@@ -1,0 +1,206 @@
+/* Apply footprints background to the entire page */
+body {
+    background: white url('/static/images/footprints.png') repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero section */
+.hero-section {
+    position: relative;
+    height: 600px;
+    background: url('/media/animals/forest.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Fun Facts Section */
+.fun-facts-section {
+    padding: 50px;
+    text-align: center;
+    background: #f7f7f7;
+}
+
+.fact-box-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.fact-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.fact-box:hover {
+    transform: scale(1.05);
+}
+
+/* Category Section */
+.categories-section {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 50px;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    width: 350px;
+    margin-bottom: 30px;
+}
+
+.category-card:hover {
+    transform: scale(1.1);
+}
+
+.category-card img {
+    width: 320px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.category-card a {
+    display: block;
+    margin-top: 10px;
+    padding: 15px;
+    background: #ff5733;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.category-card a:hover {
+    background: #ff4500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 400px;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-content p {
+        font-size: 1.4rem;
+    }
+
+    .fact-box-container {
+        flex-direction: column;
+    }
+
+    .category-card {
+        width: 100%;
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+
+    .category-card img {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .fact-box {
+        width: 100%;
+    }
+
+    .category-card img {
+        height: 180px;
+    }
+}
+
+/* Add smooth transitions for background color changes */
+body {
+    transition: background-color 0.3s ease;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .hero-content h1,
+body.dark-mode .hero-content p {
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .fact-box {
+    background: rgba(33, 33, 33, 0.9);
+    color: white;
+}
+
+body.dark-mode .category-card {
+    background: #333;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .category-card a {
+    background: #ff5733;
+}
+
+body.dark-mode .category-card a:hover {
+    background: #ff4500;
+}

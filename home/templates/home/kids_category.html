@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="category-detail">
+    <h1>{{ category.get_type_display }}</h1>
+    
+    <div class="animal-grid">
+        {% for animal in animals %}
+        <div class="animal-card">
+            {% if animal.image1 %}
+            <img src="{{ category.image1.url }}" alt="{{ animal.name }}">
+            {% endif %}
+            <h3>{{ animal.name }}</h3>
+            {% if animal.description_kids %}
+            <p>{{ animal.description_kids }}</p>
+            {% endif %}
+            {% if animal.audio %}
+            <audio controls>
+                <source src="{{ animal.audio.url }}" type="audio/mpeg">
+            </audio>
+            {% endif %}
+            {% if animal.fun_facts_kids %}
+            <div class="fun-fact">{{ animal.fun_facts_kids }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

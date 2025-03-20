@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Animal Encyclopedia{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 mb-3">Welcome to the Animal Encyclopedia</h1>
+    <p class="lead">Explore animals from different categories and sections!</p>
+</div>
+
+<!-- Animal Cards -->
+<div class="row g-4">
+    {% for animal in animals %}
+    <div class="col-md-3">
+        <a href="{% url 'animal_detail' animal.pk %}" class="text-decoration-none">
+            <div class="card animal-card h-100 {% if dark_mode %}bg-dark border-secondary{% endif %}">
+                <img src="{{ animal.image1.url }}" class="card-img-top" alt="{{ animal.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h3 class="card-title h5">{{ animal.name }}</h3>
+                    <div class="mt-2">
+                        <span class="btn btn-sm btn-outline-primary">Learn More</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">No animals to display.</div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination Controls -->
+<div class="d-flex justify-content-center mt-4">
+    <nav>
+        <ul class="pagination">
+            <li class="page-item {% if not animals.has_previous %}disabled{% endif %}">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item {% if not animals.has_previous %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ animals.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">{{ animals.number }} of {{ animals.paginator.num_pages }}</span>
+            </li>
+            <li class="page-item {% if not animals.has_next %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ animals.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item {% if not animals.has_next %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ animals.paginator.num_pages }}" aria-label="Last">
+                    <span

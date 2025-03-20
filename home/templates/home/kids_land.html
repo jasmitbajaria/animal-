@@ -1,0 +1,259 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Welcome to the Kids' Corner - Land Animals!</h1>
+        <p>Roar, stomp, and explore—meet the kings of the land!</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="welcome-section">
+            <h2>Discover the Wild World of Land Animals!</h2>
+            <p>Meet incredible creatures that roam forests, jungles, and mountains!</p>
+        </div>
+
+        <!-- ✅ Fun Facts Section -->
+        <div class="fun-facts-carousel">
+            <h3>Did You Know?</h3>
+            <div class="facts-container">
+                <div class="fact-slide active"><p>Elephants use their trunks to drink, grab, and even say hello!</p></div>
+                <div class="fact-slide"><p>A tiger's roar can be heard up to 2 miles away!</p></div>
+                <div class="fact-slide"><p>Kangaroos can’t walk backward!</p></div>
+                <div class="fact-slide"><p>Giraffes only need 30 minutes of sleep per day!</p></div>
+                <div class="fact-slide"><p>A wolf’s sense of smell is 100 times better than a human's!</p></div>
+            </div>
+            <div class="fact-dots"></div>
+        </div>
+        <!-- ✅ Additional 10 Animal Cards -->
+<h3 class="animal-section-title">More Amazing Land Animals!</h3>
+<div class="categories-section">
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Bear.jpg" alt="Bear">
+        <h3>Bear</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Deer.jpg" alt="Deer">
+        <h3>Deer</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Elephant.jpg" alt="Elephant">
+        <h3>Elephant</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Giraffe.jpg" alt="Giraffe">
+        <h3>Giraffe</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Kangaroo.jpg" alt="Kangaroo">
+        <h3>Kangaroo</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Lion.jpg" alt="Lion">
+        <h3>Lion</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Panda.jpg" alt="Panda">
+        <h3>Panda</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Tiger.jpg" alt="Tiger">
+        <h3>Tiger</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Wolf.jpg" alt="Wolf">
+        <h3>Wolf</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+    <div class="category-card">
+        <img src="/media/animals/kidscornerm/land/Zebra.jpg" alt="Zebra">
+        <h3>Zebra</h3>
+        <a href="#" class="explore-btn">Explore</a>
+    </div>
+</div>
+
+
+        <!-- ✅ Land Animals Grid -->
+        <div class="categories-section">
+            {% for animal in land_animals %}
+            <div class="category-card">
+                <img src="{{ animal.image1.url }}" alt="{{ animal.name }}">
+                <h3>{{ animal.name }}</h3>
+                <a href="{% url 'animal_detail' animal.id %}" class="explore-btn">Explore</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ✅ Hero Section */
+.hero-section {
+    position: relative;
+    height: 650px;
+    background: url('/media/animals/kidscornerm/landanimal.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* ✅ Animal Grid */
+.categories-section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 20px;
+    padding: 50px;
+    justify-items: center;
+}
+
+
+/* ✅ Category Card */
+.category-card {
+    width: 220px;
+    height: 330px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background: white;
+    padding: 10px;
+}
+
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.category-card h3 {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: black;
+}
+
+/* ✅ Explore Button */
+.explore-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #ff5733;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.explore-btn:hover {
+    background: #c0392b;
+}
+
+/* ✅ Fun Facts Section */
+.fun-facts-carousel {
+    background: url('/media/animals/didyouknow.jpg') center/cover no-repeat;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    margin: 50px 0;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    color: white;
+}
+
+.facts-container {
+    background: rgba(255, 255, 255, 0.9);
+    position: relative;
+    min-height: 120px;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: var(--radius-md);
+}
+
+.fact-slide {
+    display: none;
+    font-size: 1.3rem;
+    color: grey;
+}
+
+.fact-slide.active {
+    display: block;
+}
+
+.fact-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.fact-dot {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.fact-dot.active {
+    background: #ff5733;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.fact-slide');
+    const dotsContainer = document.querySelector('.fact-dots');
+
+    // Create dots for each slide
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('fact-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    // Show a specific slide
+    function showSlide(n) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        document.querySelectorAll('.fact-dot').forEach(dot => dot.classList.remove("active"));
+        
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+        document.querySelectorAll('.fact-dot')[currentSlide].classList.add("active");
+    }
+
+    // Go to the next slide automatically every 5 seconds
+    setInterval(() => showSlide(currentSlide + 1), 5000);
+
+    // Show the first slide initially
+    showSlide(0);
+});
+</script>
+<p>Debug: Total Animals Found = {{ land_animals|length }}</p>
+<p>Animal Name: {{ animal.name }}, ID: {{ animal.id }}</p>
+<a href="{% url 'animal_detail' animal.id %}">Explore</a>
+
+{% endblock %}
+

@@ -1,0 +1,188 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ✅ Hero Section with Dynamic Background -->
+<div class="hero-section animal-hero" style="background-image: url('{{ animal.image1.url|default:'/static/images/default-animal.jpg' }}');">
+    <div class="hero-overlay"></div>
+    <div class="hero-content text-center">
+        <h1>{{ animal.name }}</h1>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- ✅ Book-Style Image Layout -->
+        <div class="col-md-6">
+            <div class="animal-gallery">
+                <img id="main-image" src="{{ animal.image1.url|default:'/static/images/default-animal.jpg' }}" class="img-fluid main-image" alt="{{ animal.name }}">
+                <div class="thumbnails">
+                    {% if animal.image2 %}
+                    <img src="{{ animal.image2.url }}" class="img-fluid thumbnail" alt="{{ animal.name }} - Image 2">
+                    {% endif %}
+                    {% if animal.image3 %}
+                    <img src="{{ animal.image3.url }}" class="img-fluid thumbnail" alt="{{ animal.name }} - Image 3">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ✅ Dynamic Content Based on Login -->
+        <div class="col-md-6">
+            {% if request.user.is_authenticated %}
+                {% if request.user.profile.age < 8 %}
+                    <!-- 🟢 Kids Content -->
+                    <div class="description-box kids-section">
+                        <h3>For Kids</h3>
+                        <p>{{ animal.description_kids }}</p>
+                        <h4>Fun Facts</h4>
+                        <p>{{ animal.fun_facts_kids }}</p>
+                    </div>
+                {% else %}
+                    <!-- 🔵 Scholars Content -->
+                    <div class="description-box scholars-section">
+                        <h3>Description</h3>
+                        <p>{{ animal.description_adults }}</p>
+                        <h3>Habitat</h3>
+                        <p>{{ animal.habitat_info }}</p>
+                        <h3>Behavior</h3>
+                        <p>{{ animal.behavior_info }}</p>
+                        {% if animal.conservation_status %}
+                        <h3>Conservation Status</h3>
+                        <p>{{ animal.conservation_status }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <p>Please <a href="{% url 'login' %}">log in</a> to see more details.</p>
+            {% endif %}
+
+            <!-- ✅ On-Page Audio Player -->
+            {% if animal.audio %}
+            <div class="audio-section">
+                <h3>Listen to {{ animal.name }}</h3>
+                <audio controls>
+                    <source src="{{ animal.audio.url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="audio-description">{{ animal.audio_description }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const mainImage = document.getElementById("main-image");
+    const thumbnails = document.querySelectorAll(".thumbnail");
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener("click", function () {
+            if (mainImage.src !== this.src) {
+                mainImage.style.opacity = 0; // Fade out
+                setTimeout(() => {
+                    mainImage.src = this.src; // Change image
+                    mainImage.style.opacity = 1; // Fade in
+                }, 200);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ✅ Hero Section */
+.hero-section {
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+    color: white;
+    text-align: center;
+    min-height: 300px;
+    position: relative;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* ✅ Book-Style Image Layout */
+.animal-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+}
+.thumbnails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.thumbnail {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.thumbnail:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+.main-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+}
+
+/* ✅ Description Sections */
+.description-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+.kids-section {
+    background: #fff3cd;
+}
+.scholars-section {
+    background: #e0f7fa;
+}
+h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* ✅ Audio Section */
+.audio-section {
+    margin-top: 20px;
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+.audio-description {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: #666;
+}
+</style>
+{% endblock %}

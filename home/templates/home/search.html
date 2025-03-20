@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 mb-3">Search Results</h1>
+    {% if query %}
+    <p class="lead">Showing results for "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto mb-4">
+        <form action="{% url 'search' %}" method="GET" class="search-bar">
+            <div class="input-group">
+                <input type="search" name="q" class="form-control form-control-lg" 
+                       placeholder="Search animals..." value="{{ query }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search me-2"></i>Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% if animals %}
+        {% for animal in animals %}
+            <div class="col-md-3">
+                <a href="{% url 'animal_detail' animal.pk %}" class="text-decoration-none">
+                    <div class="card animal-card h-100 {% if dark_mode %}bg-dark border-secondary{% endif %}">
+                        <img src="{{ animal.image1.url }}" class="card-img-top" alt="{{ animal.name }}" 
+                             style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h5">{{ animal.name }}</h3>
+                            <div class="mt-2">
+                                <span class="badge bg-primary me-2">{{ animal.category }}</span>
+                                <span class="badge bg-success">{{ animal.section }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% elif query %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>No animals found matching "<strong>{{ query }}</strong>". Try a different search term.
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-search me-2"></i>Enter a search term to find animals.
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if animals %}
+    <div class="text-center mt-4">
+        <p class="text-muted">Found {{ animals|length }} animals matching your search</p>
+    </div>
+{% endif %}
+{% endblock %}

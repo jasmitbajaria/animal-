@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Animal Categories{% endblock %}
+
+{% block content %}
+<div class="background-image">
+    <div class="container category-container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 text-white mb-3">Explore the Animal Kingdom</h1>
+            <p class="lead text-white">Discover fascinating creatures from air, water, and land!</p>
+        </div>
+
+        <!-- Kids' Corner Categories -->
+        <h2 class="text-center text-primary">Kids' Corner</h2>
+        <div class="row">
+            {% for category, animals in kids_categories.items %}
+            <div class="col-12">
+                <h3 class="text-center mb-3">{{ category }} Animals</h3>
+                <div class="row">
+                    {% for animal in animals %}
+                    <div class="col-md-4 mb-4">
+                        <div class="animal-box" data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}_kids">
+                            <img src="{{ animal.image1.url }}" alt="{{ animal.name|default:'Animal Image' }}" class="animal-image img-fluid">
+                            <div class="animal-info">
+                                <h3 class="animal-name">{{ animal.name }}</h3>
+                                <button class="btn btn-primary">Learn More</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade animal-modal" id="animalModal{{ animal.id }}_kids" tabindex="-1" aria-labelledby="animalModalLabel{{ animal.id }}_kids" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="animalModalLabel{{ animal.id }}_kids">{{ animal.name }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="{{ animal.image1.url }}" alt="{{ animal.name }}" class="img-fluid mb-3">
+                                        <p>{{ animal.description_kids }}</p>
+                                        {% if animal.audio %}
+                                        <audio controls class="audio-player">
+                                            <source src="{{ animal.audio.url }}" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center">No animals available in this category.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Scholars' Hub Categories -->
+        <h2 class="text-center text-danger mt-5">Scholars' Hub</h2>
+        <div class="row">
+            {% for category, animals in scholars_categories.items %}
+            <div class="col-12">
+                <h3 class="text-center mb-3">{{ category }} Species</h3>
+                <div class="row">
+                    {% for animal in animals %}
+                    <div class="col-md-4 mb-4">
+                        <div class="animal-box" data-bs-toggle="modal" data-bs-target="#animalModal{{ animal.id }}_scholars">
+                            <img src="{{ animal.image1.url }}" alt="{{ animal.name|default:'Animal Image' }}" class="animal-image img-fluid">
+                            <div class="animal-info">
+                                <h3 class="animal-name">{{ animal.name }}</h3>
+                                <button class="btn btn-danger">Learn More</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade animal-modal" id="animalModal{{ animal.id }}_scholars" tabindex="-1" aria-labelledby="animalModalLabel{{ animal.id }}_scholars" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="animalModalLabel{{ animal.id }}_scholars">{{ animal.name }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="{{ animal.image1.url }}" alt="{{ animal.name }}" class="img-fluid mb-3">
+                                        <p>{{ animal.description_adults }}</p>
+                                        {% if animal.audio %}
+                                        <audio controls class="audio-player">
+                                            <source src="{{ animal.audio.url }}" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center">No animals available in this category.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
