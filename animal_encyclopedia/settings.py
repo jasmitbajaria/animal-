@@ -92,12 +92,12 @@ USE_TZ = True
 # 🔹 Static and media files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # ✅ Fix path issue
+    BASE_DIR / "static",
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ✅ Ensure static files are served correctly in production
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # ✅ Ensures animal images & audio are served correctly
+MEDIA_ROOT = BASE_DIR / "media"
 
 # 🔹 Crispy Forms settings for Bootstrap 5
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

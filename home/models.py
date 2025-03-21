@@ -7,8 +7,8 @@ class UserProfile(models.Model):
     age = models.PositiveIntegerField()
     bio = models.TextField(blank=True, help_text="A short bio about the user")
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)  # auto_now_add should be fine
-    updated_at = models.DateTimeField(auto_now=True)  # auto_now should be fine
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def can_access_scholars_hub(self):
         return self.age >= 8
@@ -42,8 +42,8 @@ class Animal(models.Model):
     
     audio = models.FileField(upload_to='animal_sounds/', blank=True, null=True)
     audio_description = models.CharField(max_length=200, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)  # auto_now_add should be fine
-    updated_at = models.DateTimeField(auto_now=True)  # auto_now should be fine
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -60,20 +60,15 @@ class Animal(models.Model):
         return self.name
         
 class AnimalCategory(models.Model):
-    CATEGORY_CHOICES = [
-        ('flying', 'Flying Animals'),
-        ('land', 'Land Animals'),
-        ('water', 'Water Animals'),
-    ]
-    
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
-    image = models.ImageField(upload_to='category_images/')
-    description = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
-
+    type = models.CharField(max_length=100)  # Used in Animal model
+    section = models.CharField(max_length=20, default='scholars')
+    description = models.TextField(blank=True)
+    
     def __str__(self):
         return self.name
+
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
@@ -110,7 +105,7 @@ class Quiz(models.Model):
 class UserContribution(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE, related_name='contributions')
-    fact = models.TextField()
+    fact = models.TextField()  # This field should exist
     image = models.ImageField(upload_to='contributions/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     

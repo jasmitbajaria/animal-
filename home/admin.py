@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import AnimalCategory, UserProfile, Animal, Favorite, Quiz
+from .models import (
+    Animal, AnimalCategory, UserProfile, Favorite,
+    Rating, Quiz, UserContribution, Achievement
+)
 
 # Register your models here.
 
@@ -10,44 +13,23 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Animal)
 class AnimalAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'category', 'section', 'slug', 'created_at')  # Added id for unique tracking
+    list_display = ('name', 'category', 'section')
     list_filter = ('category', 'section')
-    search_fields = ('name', 'description_kids', 'description_adults')
+    search_fields = ('name',)
+    prepopulated_fields = {"slug": ("name",)}
 
-    fieldsets = (
-        ('Basic Information', {
-            'fields': ('name', 'slug', 'category', 'section')  # Added slug here
-        }),
-        ('Images', {
-            'fields': ('image1', 'image2', 'image3'),
-            'description': 'Upload up to 3 high-quality images of the animal'
-        }),
-        ('Audio', {
-            'fields': ('audio', 'audio_description'),
-            'description': 'Upload animal sounds with description'
-        }),
-        ('Kids Content', {
-            'fields': ('description_kids', 'fun_facts_kids'),
-            'description': 'Content written for children (3rd-4th grade level)'
-        }),
-        ('Scholar Content', {
-            'fields': ('description_adults', 'habitat_info', 'behavior_info', 'conservation_status'),
-            'description': 'Detailed scientific information'
-        })
-    )
-
-    prepopulated_fields = {"slug": ("name",)}  # Auto-generates slug from name
 @admin.register(AnimalCategory)
 class AnimalCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'slug')
-    list_filter = ('type',)
-    search_fields = ('name', 'description')
+    list_display = ('name', 'type', 'section')
+    list_filter = ('section',)
+    search_fields = ('name', 'type')
     prepopulated_fields = {'slug': ('name',)}
     fieldsets = (
         (None, {
-            'fields': ('name', 'type', 'slug', 'image', 'description')
+            'fields': ('name', 'type', 'slug', 'description')
         }),
     )
+
 @admin.register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'animal', 'created_at')  # Added id to show the unique ID for Favorites
@@ -57,3 +39,7 @@ class FavoriteAdmin(admin.ModelAdmin):
 class QuizAdmin(admin.ModelAdmin):
     list_display = ('id', 'question', 'correct_option', 'created_at')  # Added id to show unique ID for Quiz
     search_fields = ('question',)
+
+admin.site.register(Rating)
+admin.site.register(UserContribution)
+admin.site.register(Achievement)

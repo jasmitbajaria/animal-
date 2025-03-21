@@ -1,78 +1,75 @@
 {% extends 'home/base.html' %}
 {% load static %}
 
+{% block title %}Kids Corner{% endblock %}
+
 {% block content %}
-<div class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>Welcome to the Kids' Corner</h1>
-        <p>Discover fun and exciting facts about animals!</p>
-    </div>
-</div>
-
-<div class="main-content">
+<div class="section-header kids-section bg-warning text-white rounded p-5 mb-4">
     <div class="container">
-        <div class="welcome-section">
-            <h2>Explore the World of Animals</h2>
-            <p>Learn amazing facts about different animals in a fun and engaging way.</p>
-        </div>
-
-        <!-- ✅ Fun Facts Section -->
-        <div class="fun-facts-carousel">
-            <h3 style="color: white;">Did You Know?</h3>
-            <div class="facts-container">
-                <div class="fact-slide active">
-                    <p>Elephants use their trunks like a hand to grab things, drink water, and even say hello!</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Dolphins have names for each other and can recognize their friends by whistling!</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Butterflies taste with their feet to know if a leaf is good for their babies to eat!</p>
-                </div>
-                <div class="fact-slide">
-                    <p>A group of flamingos is called a "flamboyance" because of their bright pink color!</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Octopuses have three hearts, and their blood is blue because of a special protein!</p>
-                </div>
-            </div>
-            <div class="fact-dots"></div>
-        </div>
-
-        ✅ Kids' Animal Categories (Updated to match Scholars section style)
-        <div class="categories-section">
-            <div class="category-card">
-                <img src="/media/animals/fa.jpg" alt="Flying Animals">
-                <h3>Flying Animals</h3>
-                <a href="{% url 'kids_flying' %}" class="explore-btn">Explore</a>
-            </div>
-            <div class="category-card">
-                <img src="/media/animals/la.jpg" alt="Land Animals">
-                <h3>Land Animals</h3>
-                <a href="{% url 'kids_land' %}" class="explore-btn">Explore</a>
-            </div>
-            <div class="category-card">
-                <img src="/media/animals/wa.jpg" alt="Water Animals">
-                <h3>Water Animals</h3>
-                <a href="{% url 'kids_water' %}" class="explore-btn">Explore</a>
-            </div>
-        </div>
-        <!-- Animal Categories Section -->
-        <section class="animal-categories">
-            <h2>Explore Animal Categories</h2>
-            <div class="category-grid">
-                {% for category in categories %}
-                <div class="category-card">
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                    <h3>{{ category.get_type_display }}</h3>
-                    <a href="{% url 'kids_category' category.slug %}" class="explore-btn">Explore</a>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
+        <h1 class="display-4">Kids Corner</h1>
+        <p class="lead">Discover amazing animal facts in a fun and friendly way!</p>
     </div>
 </div>
+
+<!-- Featured Animals for Kids -->
+{% if featured_animals %}
+<section class="mb-5">
+    <h2 class="section-title mb-4">Popular Animals</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for animal in featured_animals %}
+        <div class="col">
+            {% include 'home/includes/animal_card.html' with animal=animal section='kids' %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Categories for Kids -->
+<section class="mb-5">
+    <h2 class="section-title mb-4">Animal Categories</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <!-- Use the dynamic URL pattern -->
+            <a href="{% url 'category_view' 'kids' category.slug %}" class="text-decoration-none">
+                <div class="card h-100 category-card">
+                    <div class="card-body text-center">
+                        <div class="category-icon mb-3">
+                            <i class="fas fa-paw fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text text-muted">{{ category.description|default:"Explore animals in this category"|truncatewords:10 }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Fun Facts Section -->
+<section class="mb-5">
+    <h2 class="section-title mb-4">Did You Know?</h2>
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Fun Animal Facts:</h4>
+                    <ul class="fun-facts-list">
+                        <li>Koalas sleep up to 22 hours a day!</li>
+                        <li>Giraffes have the same number of neck bones as humans.</li>
+                        <li>Octopuses have three hearts.</li>
+                        <li>Dolphins sleep with one eye open.</li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="{% static 'home/img/kids-mascot.png' %}" alt="Animal Mascot" class="img-fluid rounded" style="max-height: 200px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 {% block extra_css %}

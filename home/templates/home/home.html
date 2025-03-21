@@ -1,264 +1,80 @@
 {% extends 'home/base.html' %}
 {% load static %}
 
+{% block title %}Home{% endblock %}
+
 {% block content %}
-<div class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>Welcome to the Animal Encyclopedia</h1>
-        <p>Discover the wonders of the animal kingdom, tailored for kids and scholars alike.</p>
-    </div>
+<!-- Hero Section -->
+<div class="jumbotron bg-primary text-white rounded p-5 mb-4">
+    <h1 class="display-4">Welcome to Animal Encyclopedia</h1>
+    <p class="lead">Discover the amazing world of animals with detailed facts and information.</p>
+    <hr class="my-4 bg-white">
+    <p>Explore our comprehensive collection of animals from all habitats.</p>
+    <a class="btn btn-light btn-lg" href="#featured" role="button">Explore Animals</a>
 </div>
 
-<div class="main-content">
-    <div class="container">
-        <div class="welcome-section">
-            <h2>Explore the Animal Kingdom</h2>
-            <p>Whether you're a curious kid or a passionate scholar, dive into the fascinating world of animals.</p>
-        </div>
-
-        <!-- Fun Facts Section -->
-        <div class="fun-facts-carousel">
-            <h3 style="color: white;">Did You Know?</h3>
-            <div class="facts-container">
-                <div class="fact-slide">
-                    <p>Birds are direct descendants of theropod dinosaurs, with evidence found in fossils showcasing feathers and hollow bones.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>The blue whale, the largest animal on Earth, has a heart that weighs around 180 kg (400 lbs) and can be heard beating from 2 miles away.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Octopuses possess complex nervous systems, with two-thirds of their neurons located in their arms, allowing for independent movement and problem-solving.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Crows are incredibly intelligent They can recognize human faces, use tools, and even hold grudges against those who treat them poorly!.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Sea otters hold hands while sleeping To keep from drifting apart, sea otters hold hands in the water while they sleep. They also use kelp as an anchor to stay in place.</p>
-                </div>
-            </div>
-            <div class="fact-dots">
-                <!-- Dots will be added dynamically by JavaScript -->
+<!-- Section Cards -->
+<div class="row mb-5">
+    <div class="col-md-6 mb-4 mb-md-0">
+        <div class="card text-white bg-warning h-100">
+            <div class="card-body text-center py-5">
+                <h2 class="card-title">Kids Corner</h2>
+                <p class="card-text">Fun animal facts for young explorers!</p>
+                <a href="{% url 'kids_section' %}" class="btn btn-light">Explore</a>
             </div>
         </div>
-
-        <!-- Kids Corner and Scholars Hub Section -->
-        <div class="categories-section">
-            <div class="category-card">
-                <img src="/media/animals/kc.jpg" alt="Kids Corner">
-                <h3>Kids Corner</h3>
-                <p>Fun, interactive, and educational – perfect for young explorers!</p>
-                <a href="{% url 'kids_section' %}" class="explore-btn">Explore</a>
-            </div>
-            <div class="category-card">
-                <img src="/media/animals/sc.jpg" alt="Scholars Hub">
-                <h3>Scholars Hub</h3>
-                <p>Dive deep into the science and research behind Earth's incredible species.</p>
-                <a href="{% url 'scholars_section' %}" class="explore-btn">Explore</a>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-info h-100">
+            <div class="card-body text-center py-5">
+                <h2 class="card-title">Scholars Hub</h2>
+                <p class="card-text">Detailed scientific information for researchers.</p>
+                <a href="{% url 'scholars_section' %}" class="btn btn-light">Discover</a>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_css %}
-<style>
-/* Hero Section */
-.hero-section {
-    position: relative;
-    height: 600px;
-    background: url("/media/animals/nature.jpg") center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
+<!-- Featured Animals -->
+<section id="featured" class="mb-5">
+    <h2 class="section-title mb-4">Featured Animals</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for animal in featured_animals %}
+        <div class="col">
+            {% include 'home/includes/animal_card.html' with animal=animal %}
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No featured animals available at the moment.</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
-}
-
-.hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 20px;
-}
-
-.hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-}
-
-/* Fun Facts Section */
-.fun-facts-carousel {
-    background: url("/media/animals/didyouknow.jpg") center/cover no-repeat;
-    padding: 40px;
-    border-radius: var(--radius-lg);
-    margin: 50px 0;
-    text-align: center;
-    box-shadow: var(--shadow-md);
-    position: relative;
-}
-
-.facts-container {
-    background: rgba(255, 255, 255, 0.9);
-    position: relative;
-    min-height: 120px;
-    margin: 30px 0;
-    padding: 20px;
-    border-radius: var(--radius-md);
-}
-
-.fact-slide {
-    display: none;
-    animation: fadeIn 0.5s ease;
-}
-
-.fact-slide p {
-    font-size: 1.3rem;
-    margin: 0;
-    color: var(--text-dark);
-}
-
-.fact-dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.fact-dot {
-    width: 10px;
-    height: 10px;
-    background: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.fact-dot.active {
-    background: #ff5733;
-}
-
-/* Kids Corner and Scholars Hub Section */
-.categories-section {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    padding: 50px;
-}
-
-.category-card {
-    width: 400px;
-    height: 550px;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    text-align: center;
-    background: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.category-card:hover {
-    transform: scale(1.05);
-}
-
-.category-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.category-card:hover img {
-    transform: scale(1.1);
-}
-
-.category-card h3 {
-    margin-top: 15px;
-    font-size: 1.8rem;
-    color: black;
-}
-
-.category-card p {
-    font-size: 1.1rem;
-    color: #555;
-    margin-top: 10px;
-}
-
-.explore-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 12px 25px;
-    background: #ff5733;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    font-size: 1.2rem;
-}
-
-.explore-btn:hover {
-    background: #c0392b;
-}
-</style>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-let currentSlide = 0;
-const slides = document.querySelectorAll('.fact-slide');
-const dotsContainer = document.querySelector('.fact-dots');
-
-// Create dots for each slide
-slides.forEach((_, index) => {
-    const dot = document.createElement('span');
-    dot.classList.add('fact-dot');
-    if (index === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToSlide(index));
-    dotsContainer.appendChild(dot);
-});
-
-// Show a specific slide
-function showSlide(n) {
-    slides.forEach(slide => slide.style.display = 'none');
-    document.querySelectorAll('.fact-dot').forEach(dot => dot.classList.remove('active'));
-    
-    currentSlide = (n + slides.length) % slides.length;
-    slides[currentSlide].style.display = 'block';
-    document.querySelectorAll('.fact-dot')[currentSlide].classList.add('active');
-}
-
-// Go to the next slide
-function nextSlide() {
-    showSlide(currentSlide + 1);
-}
-
-// Go to a specific slide
-function goToSlide(n) {
-    showSlide(n);
-}
-
-// Automatically move to the next slide every 5 seconds
-setInterval(nextSlide, 5000);
-
-// Show the first slide initially
-showSlide(0);
-</script>
+<!-- Categories Section -->
+<section class="mb-5">
+    <h2 class="section-title mb-4">Browse by Category</h2>
+    <!-- In your category card section, add error handling -->
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for category in categories %}
+        <div class="col">
+            {% comment %}Try to access section safely{% endcomment %}
+            {% url 'category_view' section='scholars' slug=category.slug as fallback_url %}
+            
+            <a href="{% firstof fallback_url '#' %}" class="text-decoration-none">
+                <div class="card h-100 category-card">
+                    <div class="card-body text-center">
+                        <div class="category-icon mb-3">
+                            <i class="fas fa-paw fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text text-muted">{{ category.description|default:"Explore animals in this category"|truncatewords:10 }}</p>
+                        <span class="badge bg-primary">General</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

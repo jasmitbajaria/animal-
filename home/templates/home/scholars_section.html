@@ -1,68 +1,81 @@
 {% extends 'home/base.html' %}
 {% load static %}
 
+{% block title %}Scholars Hub{% endblock %}
+
 {% block content %}
-<div class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>Welcome to the Scholars' Hub</h1>
-        <p>Dive into the science behind Earth's diverse species.</p>
-    </div>
-</div>
-
-<div class="main-content">
+<div class="section-header scholars-section bg-info text-white rounded p-5 mb-4">
     <div class="container">
-        <div class="welcome-section">
-            <h2>Explore the Depths of Animal Science</h2>
-            <p>Delve into the biological, ecological, and evolutionary aspects of various species. This section is designed for researchers, wildlife enthusiasts, and students passionate about zoology.</p>
-        </div>
+        <h1 class="display-4">Scholars Hub</h1>
+        <p class="lead">Discover detailed scientific information about animals for research and learning.</p>
+    </div>
+</div>
 
-        <!-- Fun Facts Section (Advanced Scientific Facts) -->
-        <div class="fun-facts-carousel">
-            <h3 style="color: white;">Did You Know?</h3>
-            <div class="facts-container">
-                <div class="fact-slide">
-                    <p>Birds are direct descendants of theropod dinosaurs, with evidence found in fossils showcasing feathers and hollow bones.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>The blue whale, the largest animal on Earth, has a heart that weighs around 180 kg (400 lbs) and can be heard beating from 2 miles away.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Octopuses possess complex nervous systems, with two-thirds of their neurons located in their arms, allowing for independent movement and problem-solving.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>The cheetah’s semi-retractable claws provide it with a unique balance between grip and speed, allowing acceleration from 0 to 60 mph in just a few seconds.</p>
-                </div>
-                <div class="fact-slide">
-                    <p>Sharks have been evolving for over 400 million years, surviving five mass extinction events and adapting through electroreception to detect prey.</p>
-                </div>
-            </div>
-            <div class="fact-dots"></div>
+<!-- Featured Animals -->
+{% if featured_animals %}
+<section class="mb-5">
+    <h2 class="section-title mb-4">Featured Animals</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for animal in featured_animals %}
+        <div class="col">
+            {% include 'home/includes/animal_card.html' with animal=animal section='scholars' %}
         </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
-        <!-- Scholars' Animal Categories -->
-        <div class="categories-section">
-            <div class="category-card">
-                <img src="/media/animals/aerialanimal.jpg" alt="Aerial Animals">
-                <h3>Aerial Animals</h3>
-                <!-- Dynamic URL for aerial category -->
-                <a href="{% url 'scholars_aerial' %}" class="explore-btn">Explore</a>
-            </div>
-            <div class="category-card">
-                <img src="/media/animals/terrestrialanimal.jpg" alt="Terrestrial Animals">
-                <h3>Terrestrial Animals</h3>
-                <!-- Dynamic URL for terrestrial category -->
-                <a href="{% url 'scholars_terrestrial' %}" class="explore-btn">Explore</a>
-            </div>
-            <div class="category-card">
-                <img src="/media/animals/aquaticanimal.jpg" alt="Aquatic Animals">
-                <h3>Aquatic Animals</h3>
-                <!-- Dynamic URL for aquatic category -->
-                <a href="{% url 'scholars_aquatic' %}" class="explore-btn">Explore</a>
+<!-- Categories -->
+<section class="mb-5">
+    <h2 class="section-title mb-4">Animal Categories</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <!-- This is where the error is happening - Use the dynamic URL instead -->
+            <a href="{% url 'category_view' 'scholars' category.slug %}" class="text-decoration-none">
+                <div class="card h-100 category-card">
+                    <div class="card-body text-center">
+                        <div class="category-icon mb-3">
+                            <i class="fas fa-paw fa-3x text-info"></i>
+                        </div>
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text text-muted">{{ category.description|default:"Explore animals in this category"|truncatewords:10 }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Additional Information -->
+<section class="mb-5">
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Research Resources</h2>
+                    <ul>
+                        <li>Detailed taxonomic information</li>
+                        <li>Conservation status and efforts</li>
+                        <li>Habitat analysis</li>
+                        <li>Behavioral studies</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h2>For Educators</h2>
+                    <p>Our Scholars Hub provides comprehensive information suitable for:</p>
+                    <ul>
+                        <li>Research projects</li>
+                        <li>Educational lessons</li>
+                        <li>Scientific studies</li>
+                        <li>Conservation awareness</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block extra_css %}
